@@ -1,15 +1,12 @@
-import Head from "next/head";
-import Axios from "axios";
 import { Inter } from "@next/font/google";
-import styles from "@/styles/Home.module.css";
 import Countstrip from "../public/Images/countstrip.png";
 import Image from "next/image";
 import logo from "../public/Images/logo-new.png";
+import config from "../config/config";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home({ books }) {
-  console.log(books.data.books[0]);
   const data1 = [
     { name: "New Arrivals" },
     { name: "Box Sets" },
@@ -177,7 +174,7 @@ export default function Home({ books }) {
             <div className="bestsellercontentcol">
               <div className="row"></div>
               <div className="row bestsellerbox">
-                {books.data.books.map((user, countstrip = 0) => (
+                {books.map((user, countstrip = 0) => (
                   <div className="col-sm-20" key={books.name}>
                     <div className="card align-items-center">
                       <div className="offer position-absolute">
@@ -222,11 +219,20 @@ export default function Home({ books }) {
 }
 
 export async function getServerSideProps() {
-  const res = await fetch("http://18.205.191.245:3000/api/book");
-  const data = await res.json();
-  return {
-    props: {
-      books: data,
-    },
-  };
+  try {
+    const res = await fetch(config.API_URL + "api/book");
+
+    const result = await res.json();
+    return {
+      props: {
+        books: result.data.books,
+      },
+    };
+  } catch {
+    return {
+      props: {
+        books: [],
+      },
+    };
+  }
 }
