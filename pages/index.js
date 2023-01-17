@@ -28,7 +28,7 @@ export default function Home({ books }) {
             <div className="col-sm-11">
               <ul className="list-inline m-0 p-0">
                 {data1.map((data) => (
-                  <li className="list-inline-item">
+                  <li className="list-inline-item" key={data}>
                     <a>{data.name}</a>
                   </li>
                 ))}
