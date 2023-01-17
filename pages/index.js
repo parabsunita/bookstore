@@ -1,8 +1,12 @@
 import { Inter } from "@next/font/google";
 import Countstrip from "../public/Images/countstrip.png";
 import Image from "next/image";
-import logo from "../public/Images/logo-new.png";
+
 import config from "../config/config";
+import axios from "axios";
+import Search from "../public/Images/search-solid.svg";
+import Header from "./shared/Header";
+import BookList from "./Home/BookList";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,85 +22,6 @@ export default function Home({ books }) {
   ];
   return (
     <>
-      <header>
-        <div class="container-fluid desktopheader mobilehide">
-          <div className="row">
-            <div className="col-sm-1">
-              <Image
-                src={logo}
-                alt="Picture of the author"
-                width="350px"
-                height="300px"
-              />
-            </div>
-            <div className="col-sm-6  d-flex align-items-center justify-content-center">
-              <div className="searchcomponent">
-                <input
-                  placeholder="Search by Title, Author, Publisher or ISBN"
-                  id="inputbar"
-                  class="inputbar"
-                  type="text"
-                  autocomplete="off"
-                  maxlength="250"
-                />
-                <span class="search">
-                  <input
-                    type="button"
-                    name="btnTopSearch"
-                    value=""
-                    id="btnTopSearch"
-                    class="sprite search-btn"
-                  />
-                </span>
-              </div>
-            </div>
-            <div className="col-sm-5 d-flex align-items-center justify-content-end">
-              <ul className="list-inline m-0 signreflink position-relative"></ul>
-              <li className="list-inline-item text-center loginpopupwrapper">
-                <a href="https://www.bookswagon.com/login">
-                  <span class="usernametext">
-                    <span id="ctl00_lblUser">Hello, User</span>
-                  </span>
-                  <span class="text-white accountred">
-                    <Image
-                      alt="Wishlist Icon"
-                      src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/account_red.svg"
-                      width="50"
-                      height="30"
-                    />
-                  </span>
-                </a>
-              </li>
-              <li className="list-inline-item position-relative">
-                <a href="https://www.bookswagon.com/wishlist.aspx">
-                  <span className="itemcount">
-                    <label id="ctl00_lblWishlistCount">0</label>
-                  </span>
-                  <Image
-                    alt="Wishlist Icon"
-                    src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/wishlist_white.svg"
-                    width="50"
-                    height="30"
-                  />
-                </a>
-              </li>
-              <li className="list-inline-item position-relative">
-                <a href="https://www.bookswagon.com/wishlist.aspx">
-                  <span className="itemcount">
-                    <label id="ctl00_lblWishlistCount">0</label>
-                  </span>
-                  <Image
-                    alt="Wishlist Icon"
-                    src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/cart_white.svg"
-                    width="50"
-                    height="30"
-                  />
-                </a>
-              </li>
-            </div>
-          </div>
-        </div>
-      </header>
       <nav>
         <div className="container-fluid">
           <div className="row d-flex align-items-center justify-content-center">
@@ -161,55 +86,173 @@ export default function Home({ books }) {
                 <p>
                   <label for="amount">Price range:</label>
                   <input
-                    type="range"
+                    type="text"
                     id="amount"
-                    className="themecolor"
-                    // style="border: 0; font - weight: bold; width: 130px"
+                    class="themecolor"
+                    readonly=""
+                  />
+                </p>
+                <div
+                  id="slider-range"
+                  className="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
+                >
+                  <>
+                    <div className="ui-slider-range ui-corner-all ui-widget-header"></div>
+                    <span
+                      tabindex="0"
+                      className="ui-slider-handle ui-corner-all ui-state-default"
+                      style={{ left: "100%" }}
+                    />
+                    {/* <span
+                      tabindex="0"
+                      className="ui-slider-handle ui-corner-all ui-state-default"
+                      style={{left:"100%"}}
+                    /> */}
+                  </>
+                </div>
+              </div>
+              <div className="d-block position-relative fitertype">
+                <p>
+                  <label for="amount">Discount Range:</label>
+                  <input
+                    type="text"
+                    id="discountval"
+                    class="themecolor"
+                    readonly=""
+                    style={{ border: "0", fontWeight: "bold", width: "130px" }}
                   />
                 </p>
               </div>
-              <div className="d-block position-relative fitertype"></div>
-              <div className="d-block position-relative fitertype"></div>
+              <div className="d-block position-relative fitertype mt-4">
+                <input type="hidden" id="hdnBinding" value="0" />
+                <div className="togglefilter">
+                  <h3 className="themecolor">Binding</h3>
+                  <i className="fas fa-caret-down position-absolute"></i>
+                </div>
+                <ul
+                  className="list-unstyled"
+                  aria-labelledby="navbarDropdown"
+                  style={{ display: "block" }}
+                >
+                  <li className="nav-item position-relative">
+                    <div className="checkboxwrapper position-absolute">
+                      <input
+                        type="checkbox"
+                        value="1"
+                        name="chkBinding"
+                        onclick="GetSearchCriteria('books','Binding:1');"
+                      />
+                    </div>
+                    <a
+                      className="nav-link"
+                      href="javascript:GetSearchCriteria('books','Binding:1');"
+                    >
+                      Paper Back
+                    </a>
+                  </li>
+                  <li className="nav-item position-relative">
+                    <div className="checkboxwrapper position-absolute">
+                      <input
+                        type="checkbox"
+                        value="2"
+                        name="chkBinding"
+                        onclick="GetSearchCriteria('books','Binding:2');"
+                      />
+                    </div>
+                    <a
+                      className="nav-link"
+                      href="javascript:GetSearchCriteria('books','Binding:2');"
+                    >
+                      Hard Cover
+                    </a>
+                  </li>
+                  <li className="nav-item position-relative">
+                    <div class="checkboxwrapper position-absolute">
+                      <input
+                        type="checkbox"
+                        value="5"
+                        name="chkBinding"
+                        onclick="GetSearchCriteria('books','Binding:5');"
+                      />
+                    </div>
+                    <a
+                      className="nav-link"
+                      href="javascript:GetSearchCriteria('books','Binding:5');"
+                    >
+                      Others
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div className="d-block position-relative fitertype mt-4">
+                <input type="hidden" id="hdnLang" value="0" />
+                <div className="togglefilter">
+                  <h3 className="themecolor">Language</h3>
+                  <i className="fas fa-caret-down position-absolute"></i>
+                </div>
+                <ul
+                  className="list-unstyled"
+                  aria-labelledby="navbarDropdown"
+                  style={{ display: "block" }}
+                >
+                  <li className="nav-item position-relative">
+                    <div className="checkboxwrapper position-absolute">
+                      <input
+                        type="checkbox"
+                        value="English"
+                        name="chkLanguage"
+                        onclick="GetSearchCriteria('books','Language:English');"
+                      />
+                    </div>
+                    <a
+                      className="nav-link"
+                      href="javascript:GetSearchCriteria('books','Language:English');"
+                    >
+                      English{" "}
+                    </a>
+                  </li>
+                  <li className="nav-item position-relative">
+                    <div className="checkboxwrapper position-absolute">
+                      <input
+                        type="checkbox"
+                        value="Others"
+                        name="chkLanguage"
+                        onclick="GetSearchCriteria('books','Language:Others');"
+                      />
+                    </div>
+                    <a
+                      className="nav-link"
+                      href="javascript:GetSearchCriteria('books','Language:Others');"
+                    >
+                      Others{" "}
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div className="bestsellercontentcol">
-              <div className="row"></div>
-              <div className="row bestsellerbox">
-                {books.map((user, countstrip = 0) => (
-                  <div className="col-sm-20" key={books.name}>
-                    <div className="card align-items-center">
-                      <div className="offer position-absolute">
-                        {user.discount}%
-                      </div>
-                      <span class="countstrip">{countstrip}</span>
-                      <a href="https://www.bookswagon.com/book/it-ends-us-colleen-hoover/9781501110368"></a>
-                      <Image
-                        src={user.img_url}
-                        alt="Picture of the author"
-                        width="350"
-                        height="300"
-                        className="card-img-top"
-                      />
-                      <div className="card-body position-relative">
-                        <a className="quick-view themecolor">Quick View</a>
-                        <p className="card-text text-center">
-                          <span className="booktitle font-weight-bold">
-                            {user.name}
-                          </span>
-                          <span className="author authortextcolor">
-                            {user.author}
-                          </span>
-                          <span className="actualprice themecolor  font-weight-bold">
-                            {(user.discount * user.price) / 100}
-                          </span>
-                          <span class="initialprice">
-                            <del>{user.price}</del>
-                          </span>
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+              <div class="row">
+                <div class="col-sm-6 text-left">
+                  <strong>{books.length} results found</strong>
+                </div>
+                <div class="col-sm-6 text-right">
+                  {" "}
+                  Sort By:
+                  <select id="ddlSort">
+                    <option value="Ranking asc" selected="selected">
+                      Relevance
+                    </option>
+                    <option value="Product_ActualPrice asc">
+                      Price - Low to High
+                    </option>
+                    <option value="Product_ActualPrice desc">
+                      Price - High to Low
+                    </option>
+                    <option value="Product_discount desc">Discount</option>
+                  </select>
+                </div>
               </div>
+              <BookList books={books} />
             </div>
           </div>
         </div>
@@ -218,14 +261,19 @@ export default function Home({ books }) {
   );
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps = async () => {
   try {
-    const res = await fetch(config.API_URL + "api/book");
-
-    const result = await res.json();
+    const { data } = await axios({
+      method: "get",
+      url: config.API_URL + "api/book",
+      timeout: config.TIMEOUT, // Wait for 5 seconds
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return {
       props: {
-        books: result.data.books,
+        books: data.data.books,
       },
     };
   } catch {
@@ -235,4 +283,4 @@ export async function getServerSideProps() {
       },
     };
   }
-}
+};
