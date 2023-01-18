@@ -27,18 +27,18 @@ export default function Home({ books }) {
           <div className="row d-flex align-items-center justify-content-center">
             <div className="col-sm-11">
               <ul className="list-inline m-0 p-0">
-                {data1.map((data) => (
-                  <li className="list-inline-item" key={data}>
+                {data1.map((data, listno = 0) => (
+                  <li className="list-inline-item" key={listno + 1}>
                     <a>{data.name}</a>
                   </li>
                 ))}
               </ul>
             </div>
-            <div class="col-sm-1">
-              <ul class="list-inline float-right mb-0 text-white">
-                <li class="list-inline-item font-weight-bold ">
+            <div className="col-sm-1">
+              <ul className="list-inline float-right mb-0 text-white">
+                <li className="list-inline-item font-weight-bold ">
                   <a
-                    class="text-white p-0"
+                    className="text-white p-0"
                     href="https://play.google.com/store/apps/details?id=com.bookswagon"
                     target="_blank"
                   >
@@ -65,7 +65,7 @@ export default function Home({ books }) {
       </nav>
       <div id="site-wrapper">
         <div className="container otherpage seeallfilter">
-          <div class="text-center mt-2">
+          <div className="text-center mt-2">
             <h1>
               <span id="ctl00_phBody_lblHeading">Best Sellers</span>{" "}
             </h1>
@@ -84,12 +84,12 @@ export default function Home({ books }) {
               </h2>
               <div className="d-block position-relative fitertype">
                 <p>
-                  <label for="amount">Price range:</label>
+                  <label htmlFor="amount">Price range:</label>
                   <input
                     type="text"
                     id="amount"
-                    class="themecolor"
-                    readonly=""
+                    className="themecolor"
+                    readOnly=""
                   />
                 </p>
                 <div
@@ -99,7 +99,7 @@ export default function Home({ books }) {
                   <>
                     <div className="ui-slider-range ui-corner-all ui-widget-header"></div>
                     <span
-                      tabindex="0"
+                      tabIndex="0"
                       className="ui-slider-handle ui-corner-all ui-state-default"
                       style={{ left: "100%" }}
                     />
@@ -113,12 +113,12 @@ export default function Home({ books }) {
               </div>
               <div className="d-block position-relative fitertype">
                 <p>
-                  <label for="amount">Discount Range:</label>
+                  <label htmlFor="amount">Discount Range:</label>
                   <input
                     type="text"
                     id="discountval"
-                    class="themecolor"
-                    readonly=""
+                    className="themecolor"
+                    readOnly=""
                     style={{ border: "0", fontWeight: "bold", width: "130px" }}
                   />
                 </p>
@@ -136,49 +136,25 @@ export default function Home({ books }) {
                 >
                   <li className="nav-item position-relative">
                     <div className="checkboxwrapper position-absolute">
-                      <input
-                        type="checkbox"
-                        value="1"
-                        name="chkBinding"
-                        onclick="GetSearchCriteria('books','Binding:1');"
-                      />
+                      <input type="checkbox" value="1" name="chkBinding" />
                     </div>
-                    <a
-                      className="nav-link"
-                      href="javascript:GetSearchCriteria('books','Binding:1');"
-                    >
+                    <a className="nav-link" href="#">
                       Paper Back
                     </a>
                   </li>
                   <li className="nav-item position-relative">
                     <div className="checkboxwrapper position-absolute">
-                      <input
-                        type="checkbox"
-                        value="2"
-                        name="chkBinding"
-                        onclick="GetSearchCriteria('books','Binding:2');"
-                      />
+                      <input type="checkbox" value="2" name="chkBinding" />
                     </div>
-                    <a
-                      className="nav-link"
-                      href="javascript:GetSearchCriteria('books','Binding:2');"
-                    >
+                    <a className="nav-link" href="#">
                       Hard Cover
                     </a>
                   </li>
                   <li className="nav-item position-relative">
-                    <div class="checkboxwrapper position-absolute">
-                      <input
-                        type="checkbox"
-                        value="5"
-                        name="chkBinding"
-                        onclick="GetSearchCriteria('books','Binding:5');"
-                      />
+                    <div className="checkboxwrapper position-absolute">
+                      <input type="checkbox" value="5" name="chkBinding" />
                     </div>
-                    <a
-                      className="nav-link"
-                      href="javascript:GetSearchCriteria('books','Binding:5');"
-                    >
+                    <a className="nav-link" href="#">
                       Others
                     </a>
                   </li>
@@ -201,13 +177,9 @@ export default function Home({ books }) {
                         type="checkbox"
                         value="English"
                         name="chkLanguage"
-                        onclick="GetSearchCriteria('books','Language:English');"
                       />
                     </div>
-                    <a
-                      className="nav-link"
-                      href="javascript:GetSearchCriteria('books','Language:English');"
-                    >
+                    <a className="nav-link" href="#">
                       English{" "}
                     </a>
                   </li>
@@ -217,13 +189,9 @@ export default function Home({ books }) {
                         type="checkbox"
                         value="Others"
                         name="chkLanguage"
-                        onclick="GetSearchCriteria('books','Language:Others');"
                       />
                     </div>
-                    <a
-                      className="nav-link"
-                      href="javascript:GetSearchCriteria('books','Language:Others');"
-                    >
+                    <a className="nav-link" href="#">
                       Others{" "}
                     </a>
                   </li>
@@ -231,24 +199,20 @@ export default function Home({ books }) {
               </div>
             </div>
             <div className="bestsellercontentcol">
-              <div class="row">
-                <div class="col-sm-6 text-left">
+              <div className="row">
+                <div className="col-sm-6 text-left">
                   <strong>{books.length} results found</strong>
                 </div>
-                <div class="col-sm-6 text-right">
+                <div className="col-sm-6 text-right">
                   {" "}
                   Sort By:
                   <select id="ddlSort">
-                    <option value="Ranking asc" selected="selected">
-                      Relevance
-                    </option>
                     <option value="Product_ActualPrice asc">
                       Price - Low to High
                     </option>
                     <option value="Product_ActualPrice desc">
                       Price - High to Low
                     </option>
-                    <option value="Product_discount desc">Discount</option>
                   </select>
                 </div>
               </div>

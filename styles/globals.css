@@ -80,7 +80,7 @@ h3 span {
 
 span.search input {
     border: none;
-    background: #e42b26 url("G:\project\Online Bookstore\bookstore\public\Images\search-solid.svg") no-repeat center !important;
+    background: #e42b26 url("../public/Images/search-solid.svg") no-repeat center !important;
     padding: 16px 15px;
     background-size: 20px 19px !important;
     position: relative;

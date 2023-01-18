@@ -1,12 +1,13 @@
 import Image from "next/image";
-export default function Product() {
+export default function Product({ book, countstrip }) {
   return (
-    <div className="col-sm-20" key={countstrip}>
+    <div className="col-sm-20">
       <div className="card align-items-center">
-        <div className="offer position-absolute">
-          {book.discount == undefined ? "0" : book.discount}%
-        </div>
-        <span class="countstrip">{countstrip}</span>
+        {book.discount != undefined && (
+          <div className="offer position-absolute">{book.discount + "%"}</div>
+        )}
+
+        <span className="countstrip">{countstrip + 1}</span>
         <a href="https://www.bookswagon.com/book/it-ends-us-colleen-hoover/9781501110368"></a>
         <Image
           src={book.img_url}
@@ -25,7 +26,7 @@ export default function Product() {
                 ? book.price
                 : (book.discount * book.price) / 100}
             </span>
-            <span class="initialprice">
+            <span className="initialprice">
               <del>{book.price}</del>
             </span>
           </p>

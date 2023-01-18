@@ -22,7 +22,7 @@ export default function Header() {
                 className="inputbar"
                 type="text"
               />
-              <span class="search">
+              <span className="search">
                 <input
                   type="button"
                   name="btnTopSearch"
@@ -44,10 +44,10 @@ export default function Header() {
             <ul className="list-inline m-0 signreflink position-relative"></ul>
             <li className="list-inline-item text-center loginpopupwrapper">
               <a href="https://www.bookswagon.com/login">
-                <span class="usernametext">
+                <span className="usernametext">
                   <span id="ctl00_lblUser">Hello, User</span>
                 </span>
-                <span class="text-white accountred">
+                <span className="text-white accountred">
                   <Image
                     alt="Wishlist Icon"
                     src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/account_red.svg"
