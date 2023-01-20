@@ -1,16 +1,18 @@
-import { Inter } from "@next/font/google";
-import Countstrip from "../public/Images/countstrip.png";
 import Image from "next/image";
-
 import config from "../config/config";
 import axios from "axios";
-import Search from "../public/Images/search-solid.svg";
-import Header from "./shared/Header";
-import BookList from "./Home/BookList";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home({ books }) {
+import { useState } from "react";
+import BookList from "@/Components/Home/BookList";
+import FilterBooks from "@/Components/Home/FilterBooks";
+export default function Home({ book }) {
+  return <h1>Hello</h1>;
+  const [books, setBooks] = useState(book);
+  function handleChange(sortbooks) {
+    setTimeout(function () {
+      setBooks([...sortbooks]);
+    }, 500);
+  }
   const data1 = [
     { name: "New Arrivals" },
     { name: "Box Sets" },
@@ -40,7 +42,6 @@ export default function Home({ books }) {
                   <a
                     className="text-white p-0"
                     href="https://play.google.com/store/apps/details?id=com.bookswagon"
-                    target="_blank"
                   >
                     <Image
                       src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/android_withouthover.svg"
@@ -64,159 +65,18 @@ export default function Home({ books }) {
         </div>
       </nav>
       <div id="site-wrapper">
+        <div className="text-center mt-2">
+          <h1>
+            <span id="ctl00_phBody_lblHeading">Best Sellers</span>{" "}
+          </h1>
+        </div>
         <div className="container otherpage seeallfilter">
-          <div className="text-center mt-2">
-            <h1>
-              <span id="ctl00_phBody_lblHeading">Best Sellers</span>{" "}
-            </h1>
-          </div>
           <div className="row">
             <div className="filtercol listfilter">
-              <h2>
-                Refine your Search
-                <Image
-                  src="https://www.bookswagon.com/images/svg/clearfilter.svg"
-                  alt="clearfilter"
-                  width="40"
-                  height="30"
-                  className="float-right clearfilter"
-                />
-              </h2>
-              <div className="d-block position-relative fitertype">
-                <p>
-                  <label htmlFor="amount">Price range:</label>
-                  <input
-                    type="text"
-                    id="amount"
-                    className="themecolor"
-                    readOnly=""
-                  />
-                </p>
-                <div
-                  id="slider-range"
-                  className="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                >
-                  <>
-                    <div className="ui-slider-range ui-corner-all ui-widget-header"></div>
-                    <span
-                      tabIndex="0"
-                      className="ui-slider-handle ui-corner-all ui-state-default"
-                      style={{ left: "100%" }}
-                    />
-                    {/* <span
-                      tabindex="0"
-                      className="ui-slider-handle ui-corner-all ui-state-default"
-                      style={{left:"100%"}}
-                    /> */}
-                  </>
-                </div>
-              </div>
-              <div className="d-block position-relative fitertype">
-                <p>
-                  <label htmlFor="amount">Discount Range:</label>
-                  <input
-                    type="text"
-                    id="discountval"
-                    className="themecolor"
-                    readOnly=""
-                    style={{ border: "0", fontWeight: "bold", width: "130px" }}
-                  />
-                </p>
-              </div>
-              <div className="d-block position-relative fitertype mt-4">
-                <input type="hidden" id="hdnBinding" value="0" />
-                <div className="togglefilter">
-                  <h3 className="themecolor">Binding</h3>
-                  <i className="fas fa-caret-down position-absolute"></i>
-                </div>
-                <ul
-                  className="list-unstyled"
-                  aria-labelledby="navbarDropdown"
-                  style={{ display: "block" }}
-                >
-                  <li className="nav-item position-relative">
-                    <div className="checkboxwrapper position-absolute">
-                      <input type="checkbox" value="1" name="chkBinding" />
-                    </div>
-                    <a className="nav-link" href="#">
-                      Paper Back
-                    </a>
-                  </li>
-                  <li className="nav-item position-relative">
-                    <div className="checkboxwrapper position-absolute">
-                      <input type="checkbox" value="2" name="chkBinding" />
-                    </div>
-                    <a className="nav-link" href="#">
-                      Hard Cover
-                    </a>
-                  </li>
-                  <li className="nav-item position-relative">
-                    <div className="checkboxwrapper position-absolute">
-                      <input type="checkbox" value="5" name="chkBinding" />
-                    </div>
-                    <a className="nav-link" href="#">
-                      Others
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div className="d-block position-relative fitertype mt-4">
-                <input type="hidden" id="hdnLang" value="0" />
-                <div className="togglefilter">
-                  <h3 className="themecolor">Language</h3>
-                  <i className="fas fa-caret-down position-absolute"></i>
-                </div>
-                <ul
-                  className="list-unstyled"
-                  aria-labelledby="navbarDropdown"
-                  style={{ display: "block" }}
-                >
-                  <li className="nav-item position-relative">
-                    <div className="checkboxwrapper position-absolute">
-                      <input
-                        type="checkbox"
-                        value="English"
-                        name="chkLanguage"
-                      />
-                    </div>
-                    <a className="nav-link" href="#">
-                      English{" "}
-                    </a>
-                  </li>
-                  <li className="nav-item position-relative">
-                    <div className="checkboxwrapper position-absolute">
-                      <input
-                        type="checkbox"
-                        value="Others"
-                        name="chkLanguage"
-                      />
-                    </div>
-                    <a className="nav-link" href="#">
-                      Others{" "}
-                    </a>
-                  </li>
-                </ul>
-              </div>
+              <FilterBooks books={books}></FilterBooks>
             </div>
             <div className="bestsellercontentcol">
-              <div className="row">
-                <div className="col-sm-6 text-left">
-                  <strong>{books.length} results found</strong>
-                </div>
-                <div className="col-sm-6 text-right">
-                  {" "}
-                  Sort By:
-                  <select id="ddlSort">
-                    <option value="Product_ActualPrice asc">
-                      Price - Low to High
-                    </option>
-                    <option value="Product_ActualPrice desc">
-                      Price - High to Low
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <BookList books={books} />
+              <BookList books={books} onChange={handleChange}></BookList>
             </div>
           </div>
         </div>
@@ -227,23 +87,25 @@ export default function Home({ books }) {
 
 export const getServerSideProps = async () => {
   try {
-    const { data } = await axios({
+    const data = await axios({
       method: "get",
       url: config.API_URL + "api/book",
-      timeout: config.TIMEOUT, // Wait for 5 seconds
+      // timeout: config.TIMEOUT, // Wait for 5 seconds
       headers: {
         "Content-Type": "application/json",
       },
     });
+    console.log(data);
     return {
       props: {
-        books: data.data.books,
+        book: data.data.books,
       },
     };
-  } catch {
+  } catch (error) {
+    console.log(error);
     return {
       props: {
-        books: [],
+        book: [],
       },
     };
   }

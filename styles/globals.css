@@ -1,43 +1,3 @@
- /* @font-face {
-    font-family: "Conv_Cambria Italic";
-    src: url("G:\project\Online-Bookstore\bookstore\public\fonts\Cambria Italic.ttf");
-    src: local("â˜º"), url("G:\project\Online-Bookstore\bookstore\public\fonts\Cambria Italic.ttf") format("woff"), url("G:\project\Online-Bookstore\bookstore\public\fonts\Cambria Italic.ttf") format("truetype"), url("../web-fonts/Cambria Italic.svg") format("svg");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
-} */
-
-/* @font-face {
-    font-family: Basawa3of9MHR;
-    src: url("../web-fonts/Basawa3of9MHR.eot") format("embedded-opentype");
-    font-display: swap
-} */
-/* 
-@font-face {
-    font-family: "Conv_Dimbo Regular";
-    src: url("../web-fonts/Dimbo Regular.eot");
-    src: local("â˜º"), url("../web-fonts/Dimbo Regular.woff") format("woff"), url("../web-fonts/Dimbo Regular.ttf") format("truetype"), url("../web-fonts/Dimbo Regular.svg") format("svg");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
-} */
-/* 
-@font-face {
-    font-family: Conv_TrajanPro-Regular;
-    src: url("../web-fonts/TrajanPro-Regular.eot");
-    src: local("Ã¢ËœÂº"), url("../web-fonts/TrajanPro-Regular.woff") format("woff"), url("../web-fonts/TrajanPro-Regular.ttf") format("truetype"), url("../web-fonts/TrajanPro-Regular.svg") format("svg");
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap
-} */
-/* 
-@font-face {
-    font-family: MyriadProRegular;
-    src: url("../web-fonts/MyriadProRegular.eot");
-    src: url("../web-fonts/MyriadProRegular.eot") format("embedded-opentype"), url("../web-fonts/MyriadProRegular.woff2") format("woff2"), url("../web-fonts/MyriadProRegular.woff") format("woff"), url("../web-fonts/MyriadProRegular.ttf") format("truetype"), url("../web-fonts/MyriadProRegular.svg#MyriadProRegular") format("svg");
-    font-display: swap
-} */ */
-
 h1 span.promotitletext,
 h2,
 h2 span,
@@ -2349,12 +2309,13 @@ span.author.authorname.authortextcolor {
 }
 
 .offer {
+    top:0.3rem;
     background: red;
     width: 36px;
     height: 36px;
     border-radius: 50%;
     color: #fff;
-    right: 3px;
+    right: 0.75rem;
     line-height: 20px;
     padding-top: 8px;
     font-weight: 700;
@@ -3522,7 +3483,7 @@ a.blackhover {
 }
 
 .listfilter h3 {
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 700
 }
 
@@ -5003,7 +4964,7 @@ ul.markreview li {
 
 body #site-wrapper {
     max-width: 95% !important;
-    width: 1269px !important;
+    width: 1350px !important;
     padding-top: 0 !important
 }
 

@@ -1,5 +1,5 @@
 import Image from "next/image";
-export default function Product({ book, countstrip }) {
+export default function Book({ book, countstrip }) {
   return (
     <div className="col-sm-20">
       <div className="card align-items-center">
