@@ -1,5 +1,18 @@
 import Image from "next/image";
-export default function FilterBooks({ books, onChange }) {
+import { useContext } from "react";
+import BookContext from "./BookContext";
+export default function FilterBooks({ filter }) {
+  const values = useContext(BookContext);
+
+  const handleSortBooks = values.handleSortBooks;
+
+  function handleChange(e) {
+    if (e.target.id == "PAPERBACK" || e.target.id == "HARDCOVER") {
+      var filtertype = "binding";
+    }
+    handleSortBooks(filtertype, e.target.id);
+  }
+
   return (
     <>
       <h2>
@@ -13,40 +26,18 @@ export default function FilterBooks({ books, onChange }) {
         />
       </h2>
       <div className="d-block position-relative fitertype">
-        <p>
-          <label htmlFor="amount">Price range:</label>
-          <input type="text" id="amount" className="themecolor" readOnly="" />
-        </p>
-        <div
-          id="slider-range"
-          className="ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-        >
-          <>
-            <div className="ui-slider-range ui-corner-all ui-widget-header"></div>
-            <span
-              tabIndex="0"
-              className="ui-slider-handle ui-corner-all ui-state-default"
-              style={{ left: "100%" }}
-            />
-            {/* <span
-                      tabindex="0"
-                      className="ui-slider-handle ui-corner-all ui-state-default"
-                      style={{left:"100%"}}
-                    /> */}
-          </>
-        </div>
+        <label htmlFor="amount" className="d-block">
+          Price range:
+        </label>
+
+        <input type="range" min="1" max="100" value="50" id="myRange" />
       </div>
       <div className="d-block position-relative fitertype">
-        <p>
-          <label htmlFor="amount">Discount Range:</label>
-          <input
-            type="text"
-            id="discountval"
-            className="themecolor"
-            readOnly=""
-            style={{ border: "0", fontWeight: "bold", width: "130px" }}
-          />
-        </p>
+        <label htmlFor="amount" className="d-block">
+          Discount range:
+        </label>
+
+        <input type="range" min="1" max="100" value="50" id="myRange" />
       </div>
       <div className="d-block position-relative fitertype mt-4">
         <input type="hidden" id="hdnBinding" value="0" />
@@ -60,12 +51,22 @@ export default function FilterBooks({ books, onChange }) {
           style={{ display: "block" }}
         >
           <li className="nav-item position-relative">
-            <input type="checkbox" id="paperback" className="mr-2"></input>
-            <label htmlFor="paperback"> Paper Back</label>
+            <input
+              type="checkbox"
+              id="PAPERBACK"
+              className="mr-2"
+              onClick={handleChange}
+            ></input>
+            <label htmlFor="PAPERBACK"> Paper Back</label>
           </li>
           <li className="nav-item position-relative">
-            <input type="checkbox" id="HardCover" className="mr-2"></input>
-            <label htmlFor="HardCover"> Hard Cover</label>
+            <input
+              type="checkbox"
+              id="HARDCOVER"
+              className="mr-2"
+              onClick={handleChange}
+            ></input>
+            <label htmlFor="HARDCOVER"> Hard Cover</label>
           </li>
           <li className="nav-item position-relative">
             <input type="checkbox" id="Others" className="mr-2"></input>
@@ -106,6 +107,35 @@ export default function FilterBooks({ books, onChange }) {
           </li>
         </ul>
       </div>
+      {/* <div>
+        {filter.map((filter, countstrip = 0) => (
+          <span>{filter.price_range.heading}</span>
+        ))} */}
+      {/* </div> */}
     </>
   );
 }
+// export const getServerSideProps = async () => {
+//   try {
+//     const { data } = await axios({
+//       method: "get",
+//       url: config.API_URL + "api/book/filter/list",
+//       // timeout: config.TIMEOUT, // Wait for 5 seconds
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//     });
+//     console.log(data);
+//     return {
+//       props: {
+//         filter: data.data.filters,
+//       },
+//     };
+//   } catch (error) {
+//     return {
+//       props: {
+//         filter: [],
+//       },
+//     };
+//   }
+// };

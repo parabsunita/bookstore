@@ -1,14 +1,24 @@
 import Image from "next/image";
+import Link from "next/link";
+import { useContext } from "react";
+import BookContext from "./BookContext";
+
 export default function Book({ book, countstrip }) {
+  const values = useContext(BookContext);
+  const showdetailbook = values.showdetailbook;
   return (
     <div className="col-sm-20">
-      <div className="card align-items-center">
+      <div
+        className="card align-items-center showdetailbook"
+        id={book.isbn_13}
+        onClick={showdetailbook}
+      >
         {book.discount != undefined && (
           <div className="offer position-absolute">{book.discount + "%"}</div>
         )}
 
         <span className="countstrip">{countstrip + 1}</span>
-        <a href="https://www.bookswagon.com/book/it-ends-us-colleen-hoover/9781501110368"></a>
+
         <Image
           src={book.img_url}
           alt="Picture of the author"

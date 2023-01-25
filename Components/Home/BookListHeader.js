@@ -1,25 +1,14 @@
-export default function BookListHeader({ books, onChange }) {
-  var sortbooks;
-  const SortData = (abc) => {
-    var value = document.getElementById("Sort").value;
-    if (value == "Product_ActualPrice asc") {
-      sortbooks = books.sort(
-        (a, b) => (a.discount * a.price) / 100 - (b.discount * b.price) / 100
-      );
-      console.log(abc);
-    } else if (value == "Product_ActualPrice desc") {
-      sortbooks = books.sort(function (a, b) {
-        return (b.discount * b.price) / 100 - (a.discount * a.price) / 100;
-      });
-    } else {
-      sortbooks = books;
-    }
-    return sortbooks;
-  };
-  function handleChange(event) {
-    // Here, we invoke the callback with the new value
-    debugger;
-    onChange(SortData());
+import { useContext } from "react";
+import BookContext from "./BookContext";
+
+export default function BookListHeader() {
+  const values = useContext(BookContext);
+  const books = values.books;
+  const handleSortBooks = values.handleSortBooks;
+  function handleChange() {
+    const filterparam = document.getElementById("Sort").value;
+    const filterquery = "sortby";
+    handleSortBooks(filterquery, filterparam);
   }
 
   return (
@@ -33,10 +22,9 @@ export default function BookListHeader({ books, onChange }) {
           Sort By:
           <select id="Sort" onChange={handleChange}>
             <option value="Relevence">Relevence</option>
-            <option value="Product_ActualPrice asc">Price - Low to High</option>
-            <option value="Product_ActualPrice desc">
-              Price - High to Low
-            </option>
+            <option value="price_low_to_high">Price - Low to High</option>
+            <option value="price_high_to_low">Price - High to Low</option>
+            <option value="discount_high_to_low">Discount</option>
           </select>
         </div>
       </div>

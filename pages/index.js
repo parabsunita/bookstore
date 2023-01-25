@@ -1,70 +1,57 @@
-import Image from "next/image";
 import config from "../config/config";
-import axios from "axios";
-
+import Axios from "axios";
+import BooContext from "@/Components/Home/BookContext";
 import { useState } from "react";
 import BookList from "@/Components/Home/BookList";
 import FilterBooks from "@/Components/Home/FilterBooks";
+import Navbar from "@/Components/Shared/Navbar";
+import Bookdetail from "@/Components/Home/Bookdetails";
 export default function Home({ book }) {
-  return <h1>Hello</h1>;
   const [books, setBooks] = useState(book);
-  function handleChange(sortbooks) {
+  const [detailbook, setShowDetailBook] = useState(false);
+  const [detailbookapi, setShowDetailBookapi] = useState({});
+  async function handleSortBooks(filtertype, filterparam, filterstatus) {
+    const filterbook = await Axios({
+      method: "get",
+      url: `http://18.205.191.245:3000/api/book?${filtertype}=${filterparam}`,
+
+      // timeout: config.TIMEOUT, // Wait for 5 seconds
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     setTimeout(function () {
-      setBooks([...sortbooks]);
+      setBooks(filterbook.data.data.books);
     }, 500);
   }
-  const data1 = [
-    { name: "New Arrivals" },
-    { name: "Box Sets" },
-    { name: "Best Sellers" },
-    { name: "Fiction Books" },
-    { name: "Awards Winner" },
-    { name: "Featured Author" },
-    { name: "Request a Book" },
-  ];
+  async function showdetailbook(e) {
+    const param = e.target.parentElement.id;
+    window.location.href = `http://localhost:3002/book/${param}`;
+    // const filterbook1 = await Axios({
+    //   method: "get",
+    //   url: `http://35.174.167.227:3000/api/book/detail/${param}`,
+
+    //   // timeout: config.TIMEOUT, // Wait for 5 seconds
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // });
+    // const bookdetail = filterbook1.data.data.book[0];
+    // console.log(filterbook1);
+    // setTimeout(function () {
+    //   setShowDetailBookapi(bookdetail);
+    //   setShowDetailBook(true);
+    // }, 500);
+  }
+
   return (
-    <>
-      <nav>
-        <div className="container-fluid">
-          <div className="row d-flex align-items-center justify-content-center">
-            <div className="col-sm-11">
-              <ul className="list-inline m-0 p-0">
-                {data1.map((data, listno = 0) => (
-                  <li className="list-inline-item" key={listno + 1}>
-                    <a>{data.name}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="col-sm-1">
-              <ul className="list-inline float-right mb-0 text-white">
-                <li className="list-inline-item font-weight-bold ">
-                  <a
-                    className="text-white p-0"
-                    href="https://play.google.com/store/apps/details?id=com.bookswagon"
-                  >
-                    <Image
-                      src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/android_withouthover.svg"
-                      alt="Picture of the author"
-                      width="50"
-                      height="40"
-                      className="wihouthover"
-                    />
-                    <Image
-                      src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/android_withhover.svg"
-                      alt="Picture of the author"
-                      width="50"
-                      height="40"
-                      className="withhover"
-                    />
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </nav>
-      <div id="site-wrapper">
+    <BooContext.Provider
+      value={{ books, detailbookapi, handleSortBooks, showdetailbook }}
+    >
+      <Navbar></Navbar>
+
+      <div id="site-wrapper" className="">
         <div className="text-center mt-2">
           <h1>
             <span id="ctl00_phBody_lblHeading">Best Sellers</span>{" "}
@@ -73,21 +60,25 @@ export default function Home({ book }) {
         <div className="container otherpage seeallfilter">
           <div className="row">
             <div className="filtercol listfilter">
-              <FilterBooks books={books}></FilterBooks>
+              {!detailbook && <FilterBooks></FilterBooks>}
             </div>
             <div className="bestsellercontentcol">
-              <BookList books={books} onChange={handleChange}></BookList>
+              {detailbook ? (
+                <Bookdetail book={detailbookapi}></Bookdetail>
+              ) : (
+                <BookList books={books}></BookList>
+              )}
             </div>
           </div>
         </div>
       </div>
-    </>
+    </BooContext.Provider>
   );
 }
 
 export const getServerSideProps = async () => {
   try {
-    const data = await axios({
+    const bookDataPromise = Axios({
       method: "get",
       url: config.API_URL + "api/book",
       // timeout: config.TIMEOUT, // Wait for 5 seconds
@@ -95,17 +86,27 @@ export const getServerSideProps = async () => {
         "Content-Type": "application/json",
       },
     });
-    console.log(data);
+    const filterDataPromise = Axios({
+      method: "get",
+      url: config.API_URL + "api/book/filter/list",
+      // timeout: config.TIMEOUT, // Wait for 5 seconds
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await Promise.all([bookDataPromise, filterDataPromise]);
+
     return {
       props: {
-        book: data.data.books,
+        book: result[0].data.data.books,
+        filter: result[1].data.data.filters,
       },
     };
   } catch (error) {
-    console.log(error);
     return {
       props: {
-        book: [],
+        book: ["a", "b"],
+        filter: [],
       },
     };
   }

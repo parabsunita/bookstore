@@ -5312,9 +5312,6 @@ body.checkoutPbg select.select {
     height: 21px !important
 }
 
-.seeallfilter input.themecolor {
-    border: none !important
-}
 
 .out-of-stock {
     color: red !important;
