@@ -6019,3 +6019,12 @@ img[alt="load more"] {
     font-size: 11px;
     color: red;
 }
+
+#loginModal {
+    position: absolute!important;
+    margin-top:2%;
+    z-index: 9;
+    height: 800px;
+    display: block!important;
+   left: 32%;
+}

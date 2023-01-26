@@ -6,6 +6,7 @@ import BookContext from "./BookContext";
 export default function Book({ book, countstrip }) {
   const values = useContext(BookContext);
   const showdetailbook = values.showdetailbook;
+
   return (
     <div className="col-sm-20">
       <div

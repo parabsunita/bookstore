@@ -11,46 +11,28 @@ export default function Home({ book }) {
   const [detailbook, setShowDetailBook] = useState(false);
   const [detailbookapi, setShowDetailBookapi] = useState({});
   async function handleSortBooks(filtertype, filterparam, filterstatus) {
-    const filterbook = await Axios({
+    Axios({
       method: "get",
-      url: `http://18.205.191.245:3000/api/book?${filtertype}=${filterparam}`,
+      // url: config.API_URL + `/api/book?${filtertype}=${filterparam}`,
+      url: config.API_URL + `api/book?${filtertype}=${filterparam}`,
 
       // timeout: config.TIMEOUT, // Wait for 5 seconds
       headers: {
         "Content-Type": "application/json",
       },
+    }).then((res) => {
+      setBooks(res.data.data.books);
     });
-
-    setTimeout(function () {
-      setBooks(filterbook.data.data.books);
-    }, 500);
   }
   async function showdetailbook(e) {
     const param = e.target.parentElement.id;
     window.location.href = `http://localhost:3002/book/${param}`;
-    // const filterbook1 = await Axios({
-    //   method: "get",
-    //   url: `http://35.174.167.227:3000/api/book/detail/${param}`,
-
-    //   // timeout: config.TIMEOUT, // Wait for 5 seconds
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    // const bookdetail = filterbook1.data.data.book[0];
-    // console.log(filterbook1);
-    // setTimeout(function () {
-    //   setShowDetailBookapi(bookdetail);
-    //   setShowDetailBook(true);
-    // }, 500);
   }
 
   return (
     <BooContext.Provider
       value={{ books, detailbookapi, handleSortBooks, showdetailbook }}
     >
-      <Navbar></Navbar>
-
       <div id="site-wrapper" className="">
         <div className="text-center mt-2">
           <h1>
@@ -60,14 +42,10 @@ export default function Home({ book }) {
         <div className="container otherpage seeallfilter">
           <div className="row">
             <div className="filtercol listfilter">
-              {!detailbook && <FilterBooks></FilterBooks>}
+              <FilterBooks></FilterBooks>
             </div>
             <div className="bestsellercontentcol">
-              {detailbook ? (
-                <Bookdetail book={detailbookapi}></Bookdetail>
-              ) : (
-                <BookList books={books}></BookList>
-              )}
+              <BookList></BookList>
             </div>
           </div>
         </div>

@@ -2,7 +2,7 @@ import { useContext } from "react";
 import BookContext from "./BookContext";
 export default function Bookdetail() {
   const values = useContext(BookContext);
-  const ratings = [1, 2, 3, 4, 5];
+
   const detailbookapi = values.detailbookapi;
 
   console.log(detailbookapi);
