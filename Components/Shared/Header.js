@@ -7,11 +7,11 @@ export default function Header() {
       <div className="container-fluid desktopheader mobilehide">
         <div className="row">
           <div className="col-sm-1">
-            <img
-              src="Images/logo-new.png"
+            <Image
+              src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/logo-new.png"
               alt="Picture of the author"
-              width="75px"
-              height="63px"
+              width="75"
+              height="63"
             />
           </div>
           <div className="col-sm-6  d-flex align-items-center justify-content-center">
@@ -52,7 +52,7 @@ export default function Header() {
                     alt="Wishlist Icon"
                     src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/account_red.svg"
                     width="50"
-                    height="30"
+                    height="33"
                   />
                 </span>
               </a>

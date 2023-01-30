@@ -7,10 +7,14 @@ export default function FilterBooks({ filter }) {
   const handleSortBooks = values.handleSortBooks;
 
   function handleChange(e) {
-    if (e.target.id == "PAPERBACK" || e.target.id == "HARDCOVER") {
-      var filtertype = "binding";
+    if (e.target.checked) {
+      if (e.target.id == "PAPERBACK" || e.target.id == "HARDCOVER") {
+        var filtertype = "binding";
+      }
+      handleSortBooks(filtertype, e.target.id);
+    } else {
+      handleSortBooks("", "");
     }
-    handleSortBooks(filtertype, e.target.id);
   }
 
   return (
@@ -107,35 +111,6 @@ export default function FilterBooks({ filter }) {
           </li>
         </ul>
       </div>
-      {/* <div>
-        {filter.map((filter, countstrip = 0) => (
-          <span>{filter.price_range.heading}</span>
-        ))} */}
-      {/* </div> */}
     </>
   );
 }
-// export const getServerSideProps = async () => {
-//   try {
-//     const { data } = await axios({
-//       method: "get",
-//       url: config.API_URL + "api/book/filter/list",
-//       // timeout: config.TIMEOUT, // Wait for 5 seconds
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     console.log(data);
-//     return {
-//       props: {
-//         filter: data.data.filters,
-//       },
-//     };
-//   } catch (error) {
-//     return {
-//       props: {
-//         filter: [],
-//       },
-//     };
-//   }
-// };

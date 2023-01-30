@@ -4,16 +4,15 @@ import BooContext from "@/Components/Home/BookContext";
 import { useState } from "react";
 import BookList from "@/Components/Home/BookList";
 import FilterBooks from "@/Components/Home/FilterBooks";
-import Navbar from "@/Components/Shared/Navbar";
-import Bookdetail from "@/Components/Home/Bookdetails";
+
 export default function Home({ book }) {
+  if (typeof window == "undefined") return null;
   const [books, setBooks] = useState(book);
   const [detailbook, setShowDetailBook] = useState(false);
   const [detailbookapi, setShowDetailBookapi] = useState({});
-  async function handleSortBooks(filtertype, filterparam, filterstatus) {
+  async function handleSortBooks(filtertype, filterparam) {
     Axios({
       method: "get",
-      // url: config.API_URL + `/api/book?${filtertype}=${filterparam}`,
       url: config.API_URL + `api/book?${filtertype}=${filterparam}`,
 
       // timeout: config.TIMEOUT, // Wait for 5 seconds
@@ -26,7 +25,7 @@ export default function Home({ book }) {
   }
   async function showdetailbook(e) {
     const param = e.target.parentElement.id;
-    window.location.href = `http://localhost:3002/book/${param}`;
+    window.location.href = `${window.location.href}book/${param}`;
   }
 
   return (

@@ -2670,26 +2670,26 @@ button.close {
     outline: 0
 }
 
-footer {
+.footer {
     background: #fcfcfc;
     display: block;
     margin-top: 5px
 }
 
-footer a {
+.footer a {
     color: #1d1d1d !important;
     font-family: Lato, sans-serif
 }
 
-footer h4 {
+.footer h4 {
     font-size: 16px;
     color: #d51912;
     font-weight: 700;
     font-style: italic
 }
 
-footer .fa,
-footer .fab {
+.footer .fa,
+.footer .fab {
     font-weight: 400;
     border: 1px solid #fff;
     border-radius: 50%;
@@ -2721,7 +2721,7 @@ footer .fab {
     filter: contrast(1.2)
 }
 
-footer .form-control {
+.footer .form-control {
     padding: 3px 10px !important;
     background-color: transparent !important;
     background-clip: padding-box;
@@ -3455,11 +3455,7 @@ a.blackhover {
     border: 1px solid #d51912 !important
 }
 
-.forgotpassword-wrapper,
-.otp-wrapper,
-.signup-wrapper {
-    display: none
-}
+
 
 ::-webkit-scrollbar {
     width: 10px

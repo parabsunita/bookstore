@@ -1,6 +1,7 @@
 import Axios from "axios";
 import config from "@/config/config";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 export default function BookDeatail({ bookdetail }) {
   const [auth, setAuth] = useState();
   const ratings = [1, 2, 3, 4, 5];
@@ -11,7 +12,7 @@ export default function BookDeatail({ bookdetail }) {
     } else {
       setAuth(true);
     }
-  });
+  }, []);
   return (
     <div className="container mt-2 pt-3 pb-1 product-detailwrapper">
       <div className="row">
@@ -25,7 +26,7 @@ export default function BookDeatail({ bookdetail }) {
                 >
                   {detailbookapi.discount}
                 </div>
-                <img
+                <Image
                   src={detailbookapi.img_url}
                   alt={detailbookapi.name}
                   classNameName="card-img-top bklazy d-inline-block"
@@ -73,8 +74,8 @@ export default function BookDeatail({ bookdetail }) {
               <div id="ctl00_phBody_ProductDetail_AvgProductRating_plnRating  d-inline">
                 <ul className="list-inline">
                   {ratings.map((index) => (
-                    <li className="list-inline-item">
-                      <img
+                    <li className="list-inline-item" key={indexOf(index)}>
+                      <Image
                         src="https://www.bookswagon.com/images/svg/graystar.svg"
                         id="ctl00_phBody_ProductDetail_AvgProductRating_star1"
                         alt="Gray Star"
@@ -157,12 +158,76 @@ export default function BookDeatail({ bookdetail }) {
                     type="button"
                     className="btn  border themeborder themecolor ml-1"
                     value="Add to Wishlist"
-                    onclick="AddToWishlist('16788563')"
                     style={{ width: "250px", maxWidth: "48%" }}
                   />
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div className="col-12 row">
+          <hr className="border w-100"></hr>
+        </div>
+        <div className="row" id="bookdetail">
+          <div className="col-sm-12">
+            <span className="themecolor font-weight-bold">Product Details</span>
+          </div>
+          <div className="col-sm-6 border-right">
+            <ul className="list-unstyled detailfont14 ">
+              <li>
+                <span className="font-weight-bold">ISBN-13: </span>
+                {detailbookapi.isbn_13}
+              </li>
+              <li>
+                <span className="font-weight-bold">Publisher Date: </span>{" "}
+                {detailbookapi.released_date}
+              </li>
+              <li>
+                <span className="font-weight-bold">Binding: </span>{" "}
+                {detailbookapi.binding}
+              </li>
+              <li>
+                <span className="font-weight-bold">Height: </span>{" "}
+                {detailbookapi.height}
+              </li>
+
+              <li>
+                <span className="font-weight-bold">Series Title: </span>{" "}
+                {detailbookapi.name}
+              </li>
+              <li>
+                <span class="font-weight-bold">Weight: </span>{" "}
+                {detailbookapi.weight}
+              </li>
+            </ul>
+          </div>
+          <div className="col-sm-6">
+            <ul className="list-unstyled detailfont14">
+              <li>
+                <span className="font-weight-bold">ISBN-10: </span>{" "}
+                {detailbookapi.isbn_10}
+              </li>
+              <li>
+                <span className="font-weight-bold">Publisher Imprint: </span>
+                {detailbookapi.publisher}
+              </li>
+              <li>
+                <span className="font-weight-bold">Depth: </span>25
+              </li>
+              <li>
+                <span className="font-weight-bold">Language: </span>
+                {detailbookapi.bookLanguage}
+              </li>
+              <li>
+                <span className="font-weight-bold">Returnable: </span>{" "}
+                {detailbookapi.returnable ? "Y" : "N"}
+              </li>
+
+              <li>
+                <span className="font-weight-bold">Width: </span>{" "}
+                {detailbookapi.width}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -188,7 +253,6 @@ export const getServerSideProps = async (context) => {
       },
     };
   } catch (error) {
-    console.log("ghjhj");
     return {
       props: {
         bookdetail: [],
