@@ -6,7 +6,7 @@ import BookList from "@/Components/Home/BookList";
 import FilterBooks from "@/Components/Home/FilterBooks";
 
 export default function Home({ book }) {
-  if (typeof window == "undefined") return null;
+  // if (typeof window == "undefined") return null;
   const [books, setBooks] = useState(book);
   const [detailbook, setShowDetailBook] = useState(false);
   const [detailbookapi, setShowDetailBookapi] = useState({});
