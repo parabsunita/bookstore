@@ -6,8 +6,29 @@ export default function BookDeatail({ bookdetail }) {
   const [auth, setAuth] = useState();
   const ratings = [1, 2, 3, 4, 5];
   const detailbookapi = bookdetail[0];
+  function ByNow(e) {
+    Axios({
+      method: "post",
+      url: config.API_URL + "api/order/initOrder",
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("AuthKey"),
+      },
+      data: {
+        books: [
+          {
+            bookId: e.target.id,
+            quantity: 1,
+          },
+        ],
+        callbackUrl: "http://localhost:3001/my-orders",
+      },
+    }).then((res) => {
+      window.location.href = res.data.data.paymentLink;
+    });
+  }
   useEffect(() => {
-    if (typeof localStorage.getItem("AuthKey") === null) {
+    if (localStorage.getItem("AuthKey") === null) {
       setAuth(false);
     } else {
       setAuth(true);
@@ -31,6 +52,8 @@ export default function BookDeatail({ bookdetail }) {
                   alt={detailbookapi.name}
                   classNameName="card-img-top bklazy d-inline-block"
                   title={detailbookapi.name}
+                  width="227"
+                  height="340"
                 />
               </div>
             </div>
@@ -74,11 +97,13 @@ export default function BookDeatail({ bookdetail }) {
               <div id="ctl00_phBody_ProductDetail_AvgProductRating_plnRating  d-inline">
                 <ul className="list-inline">
                   {ratings.map((index) => (
-                    <li className="list-inline-item" key={indexOf(index)}>
+                    <li className="list-inline-item" key={index}>
                       <Image
                         src="https://www.bookswagon.com/images/svg/graystar.svg"
                         id="ctl00_phBody_ProductDetail_AvgProductRating_star1"
                         alt="Gray Star"
+                        width="10"
+                        height="10"
                       />
                     </li>
                   ))}
@@ -133,25 +158,21 @@ export default function BookDeatail({ bookdetail }) {
                     id="ctl00_phBody_ProductDetail_divAddtoCart"
                     style={{ width: "250px", maxWidth: "48%" }}
                   >
-                    <a
-                      class="iframe cboxElement"
-                      href="https://www.bookswagon.com/shoppingcart.aspx?pid=16788563&amp;vid=98&amp;ptype=1"
-                      rel="nofollow"
-                    >
-                      {auth ? (
-                        <input
-                          type="button"
-                          className="btn themebackground text-white"
-                          value="Buy Now"
-                        />
-                      ) : (
-                        <input
-                          type="button"
-                          className="btn themebackground text-white"
-                          value="Sign In"
-                        />
-                      )}
-                    </a>
+                    {auth ? (
+                      <input
+                        type="button"
+                        className="btn themebackground text-white"
+                        value="Buy Now"
+                        onClick={ByNow}
+                        id={detailbookapi.id}
+                      />
+                    ) : (
+                      <input
+                        type="button"
+                        className="btn themebackground text-white"
+                        value="Sign In"
+                      />
+                    )}
                   </div>
 
                   <input

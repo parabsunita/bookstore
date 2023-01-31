@@ -37,6 +37,8 @@ export default function SignIn() {
               className="w-100"
               src="https://d2g9wbak88g7ch.cloudfront.net/staticimages/loginbanner.png"
               alt="Login banner"
+              width="498"
+              height="108"
             />
             <div className="bg-white pl-5 pr-5 pt-3 pb-3 text-center">
               <div

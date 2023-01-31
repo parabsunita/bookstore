@@ -1,13 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import Axios from "axios";
+import config from "@/config/config";
 export default function Order() {
   const [orderQty, setOrderQty] = useState(0);
+  const [order, setOrder] = useState(0);
   function DecreseQty() {
     if (orderQty != 0) setOrderQty(orderQty - 1);
   }
   function IncreaseQty() {
     setOrderQty(orderQty + 1);
   }
+  function getData() {
+    debugger;
+    Axios({
+      method: "get",
+      url: config.API_URL + "api/order/myorders",
+      headers: {
+        "Content-Type": "application/json",
+        token: localStorage.getItem("AuthKey"),
+      },
+    }).then((res) => {
+      setOrder(res.data.data.orders);
+      console.log(Order);
+    });
+  }
+  useEffect(() => {
+    getData();
+  }, []);
   return (
     <div className="container mt-2 pt-3 pb-1 product-detailwrapper">
       <div className="row">
@@ -19,6 +39,8 @@ export default function Order() {
                   src="https://d2g9wbak88g7ch.cloudfront.net/productimages/images200/662/9788172345662.jpg"
                   classNameName="card-img-top bklazy d-inline-block"
                   alt="book"
+                  width="227"
+                  height="340"
                 />
                 <div>
                   <button value="" onClick={DecreseQty}>
