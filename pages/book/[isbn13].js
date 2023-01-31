@@ -21,7 +21,7 @@ export default function BookDeatail({ bookdetail }) {
             quantity: 1,
           },
         ],
-        callbackUrl: "http://localhost:3001/my-orders",
+        callbackUrl: config.CALLBACK_URL,
       },
     }).then((res) => {
       window.location.href = res.data.data.paymentLink;
