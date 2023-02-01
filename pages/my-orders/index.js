@@ -37,7 +37,7 @@ export default function Order() {
         <div className="col-md-12 col-lg-12 mb-2">
           {order.map(function (order, idx) {
             return (
-              <div className="row mt-2 py-4 border ipadnopad" id={idx}>
+              <div className="row mt-2 py-4 border ipadnopad" key={idx}>
                 <div className="col-md-4 col-lg-3">
                   <div className="position-relative border text-center">
                     <Image
