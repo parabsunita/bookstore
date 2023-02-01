@@ -104,7 +104,7 @@ export default function SignUp() {
                     />
                     <div className="form-group col-9 text-left">
                       <span style={{ fontSize: "13px" }}>
-                        OTP sent to Mobile
+                        OTP sent To Mobile
                       </span>
                     </div>
                     <div className="form-group col-3 text-right ">
