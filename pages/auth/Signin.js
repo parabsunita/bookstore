@@ -20,6 +20,7 @@ export default function SignIn() {
       data: JSONdata,
     }).then((res) => {
       localStorage.setItem("AuthKey", res.data.data.token);
+      history.back();
     });
   };
   return (

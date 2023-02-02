@@ -167,11 +167,13 @@ export default function BookDeatail({ bookdetail }) {
                         id={detailbookapi.id}
                       />
                     ) : (
+                      <a href="/auth/Signin">
                       <input
                         type="button"
                         className="btn themebackground text-white"
                         value="Sign In"
                       />
+                      </a>
                     )}
                   </div>
 

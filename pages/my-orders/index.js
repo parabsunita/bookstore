@@ -97,18 +97,7 @@ export default function Order() {
                     </span>
                     <br />
 
-                    <div className="available mt-2 mb-2">
-                      <p>
-                        <label id="ctl00_phBody_ProductDetail_lblBusiness">
-                          Product will deliver on <b>4-6 Business Days</b>
-                        </label>
-                        <br />
-                        <label id="ctl00_phBody_ProductDetail_lishipping">
-                          <br />
-                          Delivery charges will be 40
-                        </label>
-                      </p>
-                    </div>
+                   
                     <div id="ctl00_phBody_ProductDetail_divaction">
                       <div
                         id="ctl00_phBody_ProductDetail_divAddtoCart"
@@ -117,16 +106,11 @@ export default function Order() {
                         <input
                           type="button"
                           className="btn themebackground text-white"
-                          value="Pay Now"
+                          value={order.status}
                         />
                       </div>
 
-                      <input
-                        type="button"
-                        className="btn  border themeborder themecolor ml-1"
-                        value="Cancel"
-                        style={{ width: "250px", maxWidth: "48%" }}
-                      />
+                     
                     </div>
                   </div>
                 </div>
