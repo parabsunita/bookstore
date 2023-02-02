@@ -2,6 +2,7 @@ import Axios from "axios";
 import config from "@/config/config";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 export default function BookDeatail({ bookdetail }) {
   const [auth, setAuth] = useState();
   const ratings = [1, 2, 3, 4, 5];
@@ -167,13 +168,13 @@ export default function BookDeatail({ bookdetail }) {
                         id={detailbookapi.id}
                       />
                     ) : (
-                      <a href="/auth/Signin">
+                      <Link href="/auth/Signin">
                       <input
                         type="button"
                         className="btn themebackground text-white"
                         value="Sign In"
                       />
-                      </a>
+                      </Link>
                     )}
                   </div>
 
